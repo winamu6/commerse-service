@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 from feedback_service.src.db import Base
 
@@ -12,5 +13,4 @@ class Feedback(Base):
     description = Column(String, nullable=False, index=True)
     score = Column(Integer, nullable=False, index=True)
 
-    # связь с продуктом
     product = relationship("Product", back_populates="feedbacks")
