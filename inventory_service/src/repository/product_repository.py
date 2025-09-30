@@ -41,17 +41,17 @@ class ProductRepository:
         await self.session.commit()
         return True
 
-    async def list_products(self, limit: int = 10, offset: int = 0) -> List[Product]:
+    async def list_products(self, limit: int, offset: int) -> List[Product]:
         stmt = select(Product).limit(limit).offset(offset)
         result = await self.session.scalars(stmt)
         return result.all()
 
-    async def search_products_by_name(self, product_name: str, limit: int = 10, offset: int = 0) -> List[Product]:
+    async def search_products_by_name(self, product_name: str, limit: int, offset: int) -> List[Product]:
         stmt = select(Product).where(Product.name.ilike(f"%{product_name}%")).limit(limit).offset(offset)
         result = await self.session.scalars(stmt)
         return result.all()
 
-    async def filter_products_by_category(self, category: str, limit: int = 10, offset: int = 0) -> List[Product]:
+    async def filter_products_by_category(self, category: str, limit: int, offset: int) -> List[Product]:
         stmt = select(Product).where(Product.category == category).limit(limit).offset(offset)
         result = await self.session.scalars(stmt)
         return result.all()
