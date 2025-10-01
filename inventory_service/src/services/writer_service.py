@@ -3,12 +3,14 @@ from typing import Optional
 from inventory_service.src.models import Product
 from inventory_service.src.repository import ProductRepository
 from inventory_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
+from inventory_service.src.services import ProductCache
 
 
 class ProductWriter:
 
-    def __init__(self, repository: ProductRepository):
+    def __init__(self, repository: ProductRepository, cache: ProductCache):
         self.repo = repository
+        self.cache = cache
 
     async def create_product(self, data: ProductCreate) -> ProductRead:
         product = Product(**data.dict())

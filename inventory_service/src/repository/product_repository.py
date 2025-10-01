@@ -62,7 +62,7 @@ class ProductRepository:
         result = await self.session.scalars(stmt)
         return result.all()
 
-    async def get_products_by_seller(self, seller_id: int, limit: int = 10, offset: int = 0) -> List[Product]:
+    async def get_products_by_seller(self, seller_id: int, limit: int, offset: int) -> List[Product]:
         stmt = select(Product).where(Product.seller_id == seller_id).limit(limit).offset(offset)
         result = await self.session.scalars(stmt)
         return result.all()

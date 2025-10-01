@@ -2,12 +2,19 @@ from typing import List
 
 from inventory_service.src.repository import ProductRepository
 from inventory_service.src.schemas import ProductRead
+from inventory_service.src.services import ProductCache
 
 class ProductReader:
-    def __init__(self, repository: ProductRepository):
+    def __init__(self, repository: ProductRepository, cache: ProductCache):
         self.repo = repository
+        self.repo = cache
 
     async def get_product_by_id(self, product_id: int) -> ProductRead | None:
+        cache_key = f"product:{product_id}"
+        cached = await self.cache.get(cache_key)
+
+        if cached:
+            return ProductRead(**cached)
         product = await self.repo.get_product_by_id(product_id)
         return ProductRead.from_orm(product) if product else None
 
@@ -28,5 +35,5 @@ class ProductReader:
         return [ProductRead.from_orm(p) for p in products]
 
     async def get_products_by_seller(self, seller_id: int, limit: int = 100, offset: int = 0) -> List[ProductRead]:
-        products = await self.repo.get_products_by_seller(seller_id)
+        products = await self.repo.get_products_by_seller(seller_id, limit, offset)
         return [ProductRead.from_orm(p) for p in products]
