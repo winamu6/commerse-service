@@ -7,7 +7,7 @@ from inventory_service.src.db.database import async_session_maker
 from inventory_service.src.db.cache import redis_client
 
 async def get_product_repository() -> ProductRepository:
-    async for session in async_session_maker():  # используем async for
+    async for session in async_session_maker():
         yield ProductRepository(session)
 
 async def get_cache_service() -> ProductCache:

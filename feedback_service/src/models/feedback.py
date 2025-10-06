@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 
 from feedback_service.src.db import Base
@@ -12,5 +12,6 @@ class Feedback(Base):
     product_id = Column(Integer, ForeignKey("products.id"), nullable=False, index=True)
     description = Column(String, nullable=False, index=True)
     score = Column(Integer, nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
 
     product = relationship("Product", back_populates="feedbacks")
