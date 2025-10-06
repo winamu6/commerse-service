@@ -17,3 +17,7 @@ class ProductCache:
 
     async def delete(self, key: str):
         await self.redis.delete(key)
+
+    async def delete_pattern(self, pattern: str):
+        async for key in self.redis.scan_iter(match=pattern):
+            await self.redis.delete(key)

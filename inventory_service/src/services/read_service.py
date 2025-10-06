@@ -10,11 +10,6 @@ class ProductReader:
         self.repo = cache
 
     async def get_product_by_id(self, product_id: int) -> ProductRead | None:
-        cache_key = f"product:{product_id}"
-        cached = await self.cache.get(cache_key)
-
-        if cached:
-            return ProductRead(**cached)
         product = await self.repo.get_product_by_id(product_id)
         return ProductRead.from_orm(product) if product else None
 
