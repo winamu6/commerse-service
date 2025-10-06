@@ -2,12 +2,10 @@ from typing import List
 
 from inventory_service.src.repository import ProductRepository
 from inventory_service.src.schemas import ProductRead
-from inventory_service.src.services import ProductCache
 
 class ProductReader:
-    def __init__(self, repository: ProductRepository, cache: ProductCache):
+    def __init__(self, repository: ProductRepository):
         self.repo = repository
-        self.repo = cache
 
     async def get_product_by_id(self, product_id: int) -> ProductRead | None:
         product = await self.repo.get_product_by_id(product_id)

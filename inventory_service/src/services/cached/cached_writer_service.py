@@ -1,10 +1,9 @@
 from typing import Optional
-from inventory_service.src.services import ProductWriter
+from inventory_service.src.services.writer_service import ProductWriter
 from inventory_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
-from inventory_service.src.services import ProductCache
+from inventory_service.src.services.cache_service import ProductCache
 
 class CachedProductWriter:
-    """Writer-сервис, который очищает кэш Redis при изменении данных."""
 
     def __init__(self, writer: ProductWriter, cache: ProductCache):
         self.writer = writer

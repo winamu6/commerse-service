@@ -1,12 +1,10 @@
-from functools import cache
 from typing import List, Optional
 from inventory_service.src.services.read_service import ProductReader
 from inventory_service.src.schemas import ProductRead
-from inventory_service.src.services import ProductCache
+from inventory_service.src.services.cache_service import ProductCache
 
 
 class CachedProductReader:
-    """Reader-сервис с поддержкой кэширования через Redis."""
 
     def __init__(self, reader: ProductReader, cache: ProductCache):
         self.reader = reader

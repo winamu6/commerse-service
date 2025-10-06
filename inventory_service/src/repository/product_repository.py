@@ -5,7 +5,6 @@ from typing import List, Optional
 
 from inventory_service.src.models import Product
 
-
 class ProductRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
