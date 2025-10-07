@@ -1,12 +1,12 @@
 from typing import Optional
 
 from inventory_service.src.models import Product
-from inventory_service.src.repository import ProductRepository
+from inventory_service.src.repository import WriterRepository
 from inventory_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
 
 class ProductWriter:
 
-    def __init__(self, repository: ProductRepository):
+    def __init__(self, repository: WriterRepository):
         self.repo = repository
 
     async def create_product(self, data: ProductCreate) -> ProductRead:

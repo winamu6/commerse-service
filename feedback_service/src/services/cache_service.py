@@ -2,7 +2,7 @@ import json
 from redis.asyncio import Redis
 from typing import Any, Optional
 
-class ProductCache:
+class FeedbackCache:
     def __init__(self, redis: Redis):
         self.redis = redis
 

@@ -1,10 +1,10 @@
 from typing import List
 
-from inventory_service.src.repository import ProductRepository
+from inventory_service.src.repository import ReadRepository
 from inventory_service.src.schemas import ProductRead
 
 class ProductReader:
-    def __init__(self, repository: ProductRepository):
+    def __init__(self, repository: ReadRepository):
         self.repo = repository
 
     async def get_product_by_id(self, product_id: int) -> ProductRead | None:

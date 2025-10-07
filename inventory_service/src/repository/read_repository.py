@@ -5,40 +5,14 @@ from typing import List, Optional
 
 from inventory_service.src.models import Product
 
-class ProductRepository:
+class ReadRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
-    async def create(self, product: Product) -> Product:
-        self.session.add(product)
-        await self.session.commit()
-        await self.session.refresh(product)
-        return product
 
     async def get_product_by_id(self, product_id: int) -> Optional[Product]:
         stmt = select(Product).where(Product.id == product_id).options(selectinload(Product.feedbacks))
         result = await self.session.scalars(stmt)
         return result.first()
-
-    async def update_product(self, product_id: int, update_data: dict) -> Optional[Product]:
-        product = await self.session.get(Product, product_id)
-        if not product:
-            return None
-
-        for key, value in update_data.items():
-            setattr(product, key, value)
-
-        await self.session.commit()
-        await self.session.refresh(product)
-        return product
-
-    async def delete_product(self, product_id: int) -> bool:
-        product = await self.session.get(Product, product_id)
-        if not product:
-            return False
-        await self.session.delete(product)
-        await self.session.commit()
-        return True
 
     async def list_products(self, limit: int, offset: int) -> List[Product]:
         stmt = select(Product).limit(limit).offset(offset)
