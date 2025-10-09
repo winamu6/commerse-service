@@ -1,3 +1,4 @@
-from .feedback_repository import FeedbackRepository
+from .read_repository import ReadRepository
+from .writer_repository import WriterRepository
 
-__all__ = ["FeedbackRepository"]
+__all__ = ["ReadRepository", "WriterRepository"]

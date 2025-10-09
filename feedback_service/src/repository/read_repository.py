@@ -5,15 +5,9 @@ from typing import List
 from feedback_service.src.models.feedback import Feedback
 
 
-class FeedbackRepository:
+class ReadRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
-
-    async def add_feedback(self, feedback: Feedback) -> Feedback:
-        self.session.add(feedback)
-        await self.session.commit()
-        await self.session.refresh(feedback)
-        return feedback
 
     async def get_feedback_for_product(
         self,
