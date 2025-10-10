@@ -9,6 +9,7 @@ class ReadRepository:
     def __init__(self, session: AsyncSession):
         self.session = session
 
+
     async def get_feedback_for_product(
         self,
         product_id: int,
@@ -31,7 +32,14 @@ class ReadRepository:
         result = await self.session.scalars(stmt)
         return result.all()
 
+
     async def get_avg_for_product(self, product_id: int) -> float:
         stmt = select(func.avg(Feedback.score)).where(Feedback.product_id == product_id)
         result = await self.session.execute(stmt)
         return result.scalar() or 0.0
+
+
+    async def get_count_for_product(self, product_id: int) -> int:
+        stmt = select(func.count(Feedback.id)).where(Feedback.product_id == product_id)
+        result = await self.session.execute(stmt)
+        return result.scalar() or 0

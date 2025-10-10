@@ -9,14 +9,14 @@ class CachedProductWriter:
         self.writer = writer
         self.cache = cache
 
-    async def create_product(self, data: ProductCreate) -> ProductRead:
+    async def cached_create_product(self, data: ProductCreate) -> ProductRead:
         product = await self.writer.create_product(data)
         await self.cache.delete_pattern("products:list:*")
         await self.cache.delete_pattern("products:category:*")
         await self.cache.delete_pattern("products:name:*")
         return product
 
-    async def update_product(self, product_id: int, data: ProductUpdate) -> Optional[ProductRead]:
+    async def cached_update_product(self, product_id: int, data: ProductUpdate) -> Optional[ProductRead]:
         product = await self.writer.update_product(product_id, data)
         if product:
             await self.cache.delete(f"product:{product_id}")
@@ -25,7 +25,7 @@ class CachedProductWriter:
             await self.cache.delete_pattern("products:name:*")
         return product
 
-    async def delete_product(self, product_id: int) -> bool:
+    async def cached_delete_product(self, product_id: int) -> bool:
         success = await self.writer.delete_product(product_id)
         if success:
             await self.cache.delete(f"product:{product_id}")

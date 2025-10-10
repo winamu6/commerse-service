@@ -1,5 +1,4 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Float
-from sqlalchemy.orm import relationship
 
 from inventory_service.src.db import Base
 
@@ -15,4 +14,4 @@ class Product(Base):
     rating = Column(Float, nullable=False, default=0)
     seller_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
 
-    feedbacks = relationship("Feedback", back_populates="product")
+    # feedbacks = relationship("Feedback", back_populates="product")

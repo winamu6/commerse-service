@@ -1,5 +1,5 @@
 from typing import List, Optional
-from inventory_service.src.services.read_service import ProductReader
+from inventory_service.src.services.reader_service import ProductReader
 from inventory_service.src.schemas import ProductRead
 from inventory_service.src.services.cache_service import ProductCache
 
@@ -10,7 +10,7 @@ class CachedProductReader:
         self.reader = reader
         self.cache = cache
 
-    async def get_product_by_id(self, product_id: int) -> Optional[ProductRead]:
+    async def get_cached_product_by_id(self, product_id: int) -> Optional[ProductRead]:
         cache_key = f"product:{product_id}"
         cached = await self.cache.get(cache_key)
         if cached:
@@ -21,7 +21,7 @@ class CachedProductReader:
             await self.cache.set(cache_key, product.dict(), expire=120)
         return product
 
-    async def get_list_products(self, limit: int = 100, offset: int = 0) -> List[ProductRead]:
+    async def get_cached_list_products(self, limit: int = 100, offset: int = 0) -> List[ProductRead]:
         cache_key = f"products:list:{limit}:{offset}"
         cached = await self.cache.get(cache_key)
         if cached:
@@ -31,7 +31,7 @@ class CachedProductReader:
         await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
         return products
 
-    async def get_products_by_name(self, name: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
+    async def get_cached_products_by_name(self, name: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
         cache_key = f"products:name:{name}:{limit}:{offset}"
         cached = await self.cache.get(cache_key)
         if cached:
@@ -41,7 +41,7 @@ class CachedProductReader:
         await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
         return products
 
-    async def filter_products_by_category(self, category: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
+    async def filter_cached_products_by_category(self, category: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
         cache_key = f"products:category:{category}:{limit}:{offset}"
         cached = await self.cache.get(cache_key)
         if cached:
@@ -51,7 +51,7 @@ class CachedProductReader:
         await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
         return products
 
-    async def sort_products_by_rating(self, order: str = "desc") -> List[ProductRead]:
+    async def sort_cached_products_by_rating(self, order: str = "desc") -> List[ProductRead]:
         cache_key = f"products:sorted:{order}"
         cached = await self.cache.get(cache_key)
         if cached:
@@ -61,7 +61,7 @@ class CachedProductReader:
         await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
         return products
 
-    async def get_products_by_seller(self, seller_id: int, limit: int = 100, offset: int = 0) -> List[ProductRead]:
+    async def get_cached_products_by_seller(self, seller_id: int, limit: int = 100, offset: int = 0) -> List[ProductRead]:
         cache_key = f"products:seller:{seller_id}:{limit}:{offset}"
         cached = await self.cache.get(cache_key)
         if cached:
