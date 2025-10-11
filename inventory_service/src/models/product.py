@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
-
+from sqlalchemy import Column, Integer, String, Float
 from inventory_service.src.db import Base
 
 class Product(Base):
@@ -12,6 +11,8 @@ class Product(Base):
     quantity = Column(Integer, nullable=False)
     category = Column(String, nullable=False, index=True)
     rating = Column(Float, nullable=False, default=0)
-    seller_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
 
-    # feedbacks = relationship("Feedback", back_populates="product")
+    seller_id = Column(Integer, nullable=False, index=True)
+
+    feedback_count = Column(Integer, nullable=False, default=0)
+    average_rating = Column(Float, nullable=False, default=0.0)

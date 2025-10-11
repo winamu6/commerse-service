@@ -11,7 +11,7 @@ async def get_product_by_id(
     product_id: int,
     service: CachedProductReader = Depends(get_cached_product_reader),
 ):
-    product = await service.get_product_by_id(product_id)
+    product = await service.get_cached_product_by_id(product_id)
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product

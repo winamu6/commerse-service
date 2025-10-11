@@ -14,4 +14,4 @@ class Feedback(Base):
     score = Column(Integer, nullable=False, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
 
-    product = relationship("Product", back_populates="feedbacks")
+    # product = relationship("Product", back_populates="feedbacks")

@@ -10,7 +10,7 @@ class ReadRepository:
         self.session = session
 
     async def get_product_by_id(self, product_id: int) -> Optional[Product]:
-        stmt = select(Product).where(Product.id == product_id).options(selectinload(Product.feedbacks))
+        stmt = select(Product).where(Product.id == product_id)
         result = await self.session.scalars(stmt)
         return result.first()
 
