@@ -8,6 +8,7 @@ from inventory_service.src.services.cached.cached_reader_service import CachedPr
 
 router = APIRouter(prefix="/products_read", tags=["ProductsRead"])
 
+
 @router.get("/by_id/{product_id}", response_model=ProductRead)
 async def get_product_by_id(
     product_id: int,
