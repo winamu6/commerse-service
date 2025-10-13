@@ -31,3 +31,11 @@ dump.rdb
 */migrations/*.py
 !*/migrations/__init__.py
 
+# Docker
+*.pid
+docker-compose.override.yml
+**/Dockerfile~
+
+# Alembic migration cache
+**/alembic/versions/__pycache__/
+**/alembic/versions/*.pyc
