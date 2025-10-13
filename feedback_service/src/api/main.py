@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
 
-from feedback_service.src.api.routers.feedback_reader_service import router as feedback_reader_router
+from feedback_service.src.api.routers.feedback_reader_router import router as feedback_reader_router
 
 app = FastAPI(title='inventory_service_api')
 
