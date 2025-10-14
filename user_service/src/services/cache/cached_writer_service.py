@@ -20,3 +20,19 @@ class CachedUserWriter:
         if result:
             await self.cache.delete(f"user:{user_id}")
         return result
+
+    async def update_password(self, user_id: int, old_password: str, new_password: str):
+        result = await self.writer.update_password(user_id, old_password, new_password)
+        if result:
+            user = await self.writer.reader.get_user_by_id(user_id)
+            if user:
+                await self.cache.delete(f"user:{user_id}", f"user:email:{user.email}")
+        return result
+
+    async def reset_password(self, user_id: int, new_password: str):
+        result = await self.writer.reset_password(user_id, new_password)
+        if result:
+            user = await self.writer.reader.get_user_by_id(user_id)
+            if user:
+                await self.cache.delete(f"user:{user_id}", f"user:email:{user.email}")
+        return result

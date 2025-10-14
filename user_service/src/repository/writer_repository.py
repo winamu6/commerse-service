@@ -1,3 +1,4 @@
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from user_service.src.models.user import User
 from typing import Optional
@@ -32,3 +33,16 @@ class UserWriterRepository:
         await self.session.delete(user)
         await self.session.commit()
         return True
+
+    async def update_password(self, user_id: int, new_hashed_password: str) -> bool:
+        user = await self.session.get(User, user_id)
+        if not user:
+            return False
+
+        user.hashed_password = new_hashed_password
+        await self.session.commit()
+        await self.session.refresh(user)
+        return True
+
+    async def reset_password(self, user_id: int, new_hashed_password: str) -> bool:
+        return await self.update_password(user_id, new_hashed_password)
