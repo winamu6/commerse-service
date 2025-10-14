@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
-from user_service.src.db import settings
+from inventory_service.src.db import settings
 
 DATABASE_URL = settings.DATABASE_URL_asyncpg
 
@@ -11,5 +11,10 @@ engine = create_async_engine(
     echo=False
 )
 
-AsyncSessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 Base = declarative_base()
+
+async_session_maker = sessionmaker(
+    engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+)
