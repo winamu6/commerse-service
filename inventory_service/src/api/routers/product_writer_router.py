@@ -7,7 +7,7 @@ from inventory_service.src.services.cached.cached_writer_service import CachedPr
 
 router = APIRouter(prefix="/products_write", tags=["ProductsWrite"])
 
-
+#добавить товар
 @router.post("/", response_model=ProductRead)
 async def create_product(
     data: ProductCreate,
@@ -16,7 +16,7 @@ async def create_product(
     product = await service.cached_create_product(data)
     return product
 
-
+#обновить карточку товара
 @router.put("/{product_id}", response_model=Optional[ProductRead])
 async def update_product(
     product_id: int,
@@ -28,7 +28,7 @@ async def update_product(
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
-
+#удалить товар#
 @router.delete("/{product_id}", response_model=bool)
 async def delete_product(
     product_id: int,

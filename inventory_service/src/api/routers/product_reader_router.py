@@ -8,7 +8,7 @@ from inventory_service.src.services.cached.cached_reader_service import CachedPr
 
 router = APIRouter(prefix="/products_read", tags=["ProductsRead"])
 
-
+#товар по id
 @router.get("/by_id/{product_id}", response_model=ProductRead)
 async def get_product_by_id(
     product_id: int,
@@ -19,7 +19,7 @@ async def get_product_by_id(
         raise HTTPException(status_code=404, detail="Product not found")
     return product
 
-
+#список товаров
 @router.get("/list", response_model=List[ProductRead])
 async def get_list_products(
     limit: int = Query(100, ge=1),
@@ -29,7 +29,7 @@ async def get_list_products(
     products = await service.get_cached_list_products(limit, offset)
     return products
 
-
+#товар по названию
 @router.get("/by_name", response_model=List[ProductRead])
 async def get_products_by_name(
     name: str,
@@ -40,7 +40,7 @@ async def get_products_by_name(
     products = await service.get_cached_products_by_name(name, limit, offset)
     return products
 
-
+#товар по категории
 @router.get("/by_category", response_model=List[ProductRead])
 async def get_products_by_category(
     category: str,
@@ -51,7 +51,7 @@ async def get_products_by_category(
     products = await service.filter_cached_products_by_category(category, limit, offset)
     return products
 
-
+#сортировка по рейтингу
 @router.get("/sorted_by_rating", response_model=List[ProductRead])
 async def sort_products_by_rating(
     order: str = Query("desc", regex="^(asc|desc)$"),
@@ -60,7 +60,7 @@ async def sort_products_by_rating(
     products = await service.sort_cached_products_by_rating(order)
     return products
 
-
+#товары от продавца
 @router.get("/by_seller/{seller_id}", response_model=List[ProductRead])
 async def get_products_by_seller(
     seller_id: int,
