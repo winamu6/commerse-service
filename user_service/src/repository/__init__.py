@@ -1,2 +1,2 @@
-from .user_repository import UserRepository
+from .reader_repository import UserRepository
 __all__ = ["UserRepository"]
