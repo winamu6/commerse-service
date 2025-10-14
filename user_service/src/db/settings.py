@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     REDIS_DB: int = 0
     REDIS_PASSWORD: str = ""
 
+    #jwt
+    SECRET_KEY:str
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+    REFRESH_TOKEN_EXPIRE_DAYS: int
+
     model_config = SettingsConfigDict(
         env_file=str(Path(__file__).parent.parent / ".env")
     )
