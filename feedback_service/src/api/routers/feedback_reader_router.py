@@ -13,9 +13,11 @@ async def get_feedback_for_product(
     product_id: int,
     limit: int = 100,
     offset: int = 0,
+    sort_by: str = "date",
+    descending: bool = True,
     service: CachedFeedbackReader = Depends(get_cached_feedback_reader),
 ):
-    feedbacks = await service.get_cached_feedback_for_product(product_id, limit, offset)
+    feedbacks = await service.get_cached_feedback_for_product(product_id, sort_by, descending, limit, offset)
     if not feedbacks:
         raise HTTPException(status_code=404, detail="Feedbacks not found")
     return feedbacks

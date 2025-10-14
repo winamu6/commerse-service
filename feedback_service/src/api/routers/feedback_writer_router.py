@@ -5,7 +5,7 @@ from feedback_service.src.schemas import FeedbackCreate
 from feedback_service.src.schemas.feedback_schem import FeedbackRead
 from feedback_service.src.services.cached import CachedFeedbackWriter
 
-router = APIRouter(prefix="/feedback_write", tags=["FeedbackRead"])
+router = APIRouter(prefix="/feedback_write", tags=["FeedbackWrite"])
 
 #создание отзыва
 @router.post("/", response_model=FeedbackRead)

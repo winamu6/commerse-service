@@ -16,7 +16,7 @@ class FeedbackReader:
         limit: int = 20,
         offset: int = 0
     ) -> List[FeedbackRead]:
-        feedbacks = await self.repo.list_products(
+        feedbacks = await self.repo.get_feedback_for_product(
             product_id=product_id,
             sort_by=sort_by,
             descending=descending,
