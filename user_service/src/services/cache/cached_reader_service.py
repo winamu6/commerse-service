@@ -1,5 +1,5 @@
 import json
-from typing import List, Optional
+from typing import Optional
 from user_service.src.services.reader_service import UserReader
 from user_service.src.schemas import UserRead
 from user_service.src.services.cache_service import UserCache
