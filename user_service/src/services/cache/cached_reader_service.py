@@ -1,72 +1,45 @@
+import json
 from typing import List, Optional
 from user_service.src.services.reader_service import UserReader
 from user_service.src.schemas import UserRead
-from user_service.src.services.cache_service import ProductCache
+from user_service.src.services.cache_service import UserCache
 
 
 class CachedUserReader:
 
-    def __init__(self, reader: ProductReader, cache: ProductCache):
+    def __init__(self, reader: UserReader, cache: UserCache):
         self.reader = reader
         self.cache = cache
 
-    async def get_cached_product_by_id(self, product_id: int) -> Optional[ProductRead]:
-        cache_key = f"product:{product_id}"
+    async def get_cached_user_by_id(self, user_id: int) -> Optional[UserRead]:
+        cache_key = f"user:{user_id}"
         cached = await self.cache.get(cache_key)
         if cached:
-            return ProductRead(**cached)
+            return UserRead(**cached)
 
-        product = await self.reader.get_product_by_id(product_id)
-        if product:
-            await self.cache.set(cache_key, product.dict(), expire=120)
-        return product
+        user = await self.reader.get_user_by_id(user_id)
+        if user:
+            await self.cache.set(cache_key, user.dict(), expire=120)
+        return user
 
-    async def get_cached_list_products(self, limit: int = 100, offset: int = 0) -> List[ProductRead]:
-        cache_key = f"products:list:{limit}:{offset}"
+    async def get_cached_user_by_mail(self, mail: str) -> Optional[UserRead]:
+        cache_key = f"user:email:{mail}"
         cached = await self.cache.get(cache_key)
         if cached:
-            return [ProductRead(**p) for p in cached]
+            return UserRead(**cached)
 
-        products = await self.reader.get_list_products(limit, offset)
-        await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
-        return products
+        user = await self.reader.get_user_by_mail(mail)
+        if user:
+            await self.cache.set(cache_key, user.dict(), expire=120)
+        return user
 
-    async def get_cached_products_by_name(self, name: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
-        cache_key = f"products:name:{name}:{limit}:{offset}"
+    async def get_all_users(self, limit: int = 100, skip: int = 0):
+        cache_key = f"users:list:{skip}:{limit}"
         cached = await self.cache.get(cache_key)
         if cached:
-            return [ProductRead(**p) for p in cached]
+            users = [UserRead.parse_raw(u) for u in json.loads(cached)]
+            return users
 
-        products = await self.reader.get_products_by_name(name, limit, offset)
-        await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
-        return products
-
-    async def filter_cached_products_by_category(self, category: str, limit: int = 100, offset: int = 0) -> List[ProductRead]:
-        cache_key = f"products:category:{category}:{limit}:{offset}"
-        cached = await self.cache.get(cache_key)
-        if cached:
-            return [ProductRead(**p) for p in cached]
-
-        products = await self.reader.filter_products_by_category(category, limit, offset)
-        await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
-        return products
-
-    async def sort_cached_products_by_rating(self, order: str = "desc") -> List[ProductRead]:
-        cache_key = f"products:sorted:{order}"
-        cached = await self.cache.get(cache_key)
-        if cached:
-            return [ProductRead(**p) for p in cached]
-
-        products = await self.reader.sort_products_by_rating()
-        await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
-        return products
-
-    async def get_cached_products_by_seller(self, seller_id: int, limit: int = 100, offset: int = 0) -> List[ProductRead]:
-        cache_key = f"products:seller:{seller_id}:{limit}:{offset}"
-        cached = await self.cache.get(cache_key)
-        if cached:
-            return [ProductRead(**p) for p in cached]
-
-        products = await self.reader.get_products_by_seller(seller_id, limit, offset)
-        await self.cache.set(cache_key, [p.dict() for p in products], expire=60)
-        return products
+        users = await super().get_all_users(limit, skip)
+        await self.cache.set(cache_key, json.dumps([u.json() for u in users]), ex=300)
+        return users

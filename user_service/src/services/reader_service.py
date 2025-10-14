@@ -18,4 +18,3 @@ class UserReader:
     async def get_all_users(self, limit: int = 100, skip: int = 0) -> List[UserRead]:
         users = await self.repo.get_all_users(skip=skip, limit=limit)
         return [UserRead.from_orm(u) for u in users]
-
