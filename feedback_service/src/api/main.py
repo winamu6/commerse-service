@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
 from feedback_service.src.api.routers.feedback_reader_router import router as feedback_reader_router
+from feedback_service.src.api.routers.feedback_writer_router import router as feedback_writer_router
 
 app = FastAPI(title='inventory_service_api')
 
@@ -16,6 +17,7 @@ app.add_middleware(
 )
 
 app.include_router(feedback_reader_router, prefix='/api')
+app.include_router(feedback_writer_router, prefix='/api')
 
 if __name__ == '__main__':
     uvicorn.run(

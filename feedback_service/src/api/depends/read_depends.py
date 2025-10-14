@@ -6,17 +6,23 @@ from feedback_service.src.repository.read_repository import ReadRepository
 from feedback_service.src.db.database import async_session_maker
 from feedback_service.src.db.cache import redis_client
 
-async def get_feedback_repository() -> ReadRepository:
+async def get_feedback_read_repository() -> ReadRepository:
     async with async_session_maker() as session:
         yield ReadRepository(session)
+
 
 async def get_cache_service() -> FeedbackCache:
     yield FeedbackCache(redis_client)
 
 
+async def get_feedback_reader(
+    repo: ReadRepository = Depends(get_feedback_read_repository),
+) -> FeedbackReader:
+    return FeedbackReader(repo)
+
+
 async def get_cached_feedback_reader(
-    repo: ReadRepository = Depends(get_feedback_repository),
+    reader: FeedbackReader = Depends(get_feedback_reader),
     cache: FeedbackCache = Depends(get_cache_service),
 ) -> CachedFeedbackReader:
-    reader = FeedbackReader(repo)
     return CachedFeedbackReader(reader, cache)
