@@ -1,5 +1,5 @@
 from user_service.src.services.writer_service import UserWriter
-from user_service.src.schemas import UserRead, UserUpdate
+from user_service.src.schemas import UserUpdate
 from user_service.src.services.cache_service import UserCache
 
 
@@ -9,19 +9,19 @@ class CachedUserWriter:
         self.writer = writer
         self.cache = cache
 
-    async def update_user(self, user_id: int, data: UserUpdate):
+    async def cached_update_user(self, user_id: int, data: UserUpdate):
         updated_user = await self.writer.update_user(user_id, data)
         if updated_user:
             await self.cache.delete(f"user:{user_id}", f"user:email:{updated_user.email}")
         return updated_user
 
-    async def delete_user(self, user_id: int):
+    async def cached_delete_user(self, user_id: int):
         result = await self.writer.delete_user(user_id)
         if result:
             await self.cache.delete(f"user:{user_id}")
         return result
 
-    async def update_password(self, user_id: int, old_password: str, new_password: str):
+    async def cached_update_password(self, user_id: int, old_password: str, new_password: str):
         result = await self.writer.update_password(user_id, old_password, new_password)
         if result:
             user = await self.writer.reader.get_user_by_id(user_id)
@@ -29,7 +29,7 @@ class CachedUserWriter:
                 await self.cache.delete(f"user:{user_id}", f"user:email:{user.email}")
         return result
 
-    async def reset_password(self, user_id: int, new_password: str):
+    async def cached_reset_password(self, user_id: int, new_password: str):
         result = await self.writer.reset_password(user_id, new_password)
         if result:
             user = await self.writer.reader.get_user_by_id(user_id)
