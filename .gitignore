@@ -36,6 +36,6 @@ dump.rdb
 docker-compose.override.yml
 **/Dockerfile~
 
-# Alembic migration cache
+# Alembic migration cached
 **/alembic/versions/__pycache__/
 **/alembic/versions/*.pyc

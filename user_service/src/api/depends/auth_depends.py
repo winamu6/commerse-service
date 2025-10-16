@@ -4,7 +4,7 @@ from user_service.src.db.cache import redis_client
 from user_service.src.repository.reader_repository import UserReaderRepository
 from user_service.src.services.auth_service import AuthService
 from user_service.src.services.cache_service import UserCache
-from user_service.src.services.cache.cached_auth_service import CachedAuthService
+from user_service.src.services.cached.cached_auth_service import CachedAuthService
 
 
 async def get_user_read_repository() -> UserReaderRepository:

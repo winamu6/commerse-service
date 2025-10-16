@@ -33,7 +33,7 @@ class CachedUserReader:
             await self.cache.set(cache_key, user.dict(), expire=120)
         return user
 
-    async def get_all_users(self, limit: int = 100, skip: int = 0):
+    async def get_cached_all_users(self, limit: int = 100, skip: int = 0):
         cache_key = f"users:list:{skip}:{limit}"
         cached = await self.cache.get(cache_key)
         if cached:

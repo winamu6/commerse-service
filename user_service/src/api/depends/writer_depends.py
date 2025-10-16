@@ -5,7 +5,7 @@ from user_service.src.repository.writer_repository import UserWriterRepository
 from user_service.src.repository.reader_repository import UserReaderRepository
 from user_service.src.services.writer_service import UserWriter
 from user_service.src.services.cache_service import UserCache
-from user_service.src.services.cache.cached_writer_service import CachedUserWriter
+from user_service.src.services.cached.cached_writer_service import CachedUserWriter
 
 
 async def get_user_read_repository() -> UserReaderRepository:

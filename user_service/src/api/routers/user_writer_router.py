@@ -3,7 +3,7 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from user_service.src.api.depends import get_cached_user_writer, get_user_writer
 from user_service.src.schemas import UserCreate, UserRead, UserUpdate
-from user_service.src.services.cache import CachedUserWriter
+from user_service.src.services.cached import CachedUserWriter
 from user_service.src.services.writer_service import UserWriter
 
 router = APIRouter(prefix="/user_write", tags=["UserWrite"])
