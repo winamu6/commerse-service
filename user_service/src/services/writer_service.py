@@ -1,7 +1,7 @@
 from typing import Optional
 from user_service.src.models import User
 from user_service.src.repository import UserWriterRepository, UserReaderRepository
-from user_service.src.schemas import UserRead, UserUpdate
+from user_service.src.schemas import UserRead, UserUpdate, UserCreate
 from user_service.src.utils import get_password_hash, verify_password
 
 
@@ -10,13 +10,13 @@ class UserWriter:
         self.reader = reader
         self.writer = writer
 
-    async def create_user(self, email: str, full_name: str, password: str) -> UserRead:
-        existing = await self.reader.get_user_by_email(email)
+    async def create_user(self, data: UserCreate) -> UserRead:
+        existing = await self.reader.get_user_by_email(data.email)
         if existing:
             raise ValueError("email is already registered")
 
-        hashed_password = get_password_hash(password)
-        new_user = User(full_name=full_name, email=email, hashed_password=hashed_password)
+        hashed_password = get_password_hash(data.password)
+        new_user = User(full_name=data.full_name, email=data.email, hashed_password=hashed_password)
         created_user = await self.writer.create_user(new_user)
         return UserRead.from_orm(created_user)
 

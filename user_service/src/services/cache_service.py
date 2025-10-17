@@ -21,3 +21,6 @@ class UserCache:
     async def delete_pattern(self, pattern: str):
         async for key in self.redis.scan_iter(match=pattern):
             await self.redis.delete(key)
+
+    async def setex(self, key: str, ttl: int, value: str):
+        await self.redis.setex(key, ttl, value)
