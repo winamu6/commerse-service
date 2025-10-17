@@ -1,6 +1,8 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi import Response
+
 from user_service.src.api.depends import get_cached_user_writer, get_user_writer
 from user_service.src.schemas import UserCreate, UserRead, UserUpdate
 from user_service.src.services.cached import CachedUserWriter
@@ -9,16 +11,30 @@ from user_service.src.services.writer_service import UserWriter
 router = APIRouter(prefix="/user_write", tags=["UserWrite"])
 
 #создать пользователя
-@router.post("/", response_model=UserRead)
+@router.post("/users", response_model=UserRead)
 async def create_user(
     data: UserCreate,
+    response: Response,
     service: UserWriter = Depends(get_user_writer),
 ):
     user = await service.create_user(data)
+
+    token = await service.authenticate_user(user.email, user.password)
+    if not token:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+
+    response.set_cookie(
+        key="access_token",
+        value=token.access_token,
+        httponly=True,
+        secure=False,
+        samesite="lax",
+    )
+
     return user
 
 #обновить данные пользователя
-@router.put("/{user_id}", response_model=Optional[UserRead])
+@router.put("/users/{user_id}", response_model=Optional[UserRead])
 async def update_user(
     user_id: int,
     data: UserUpdate,
@@ -30,7 +46,7 @@ async def update_user(
     return user
 
 #удалить пользователя
-@router.delete("/{user_id}", response_model=bool)
+@router.delete("/users/{user_id}", response_model=bool)
 async def delete_user(
     user_id: int,
     service: CachedUserWriter = Depends(get_cached_user_writer),
@@ -41,7 +57,7 @@ async def delete_user(
     return success
 
 #обновить пароль пользователя
-@router.put("/{user_id}", response_model=Optional[UserRead])
+@router.put("/users/{user_id}", response_model=Optional[UserRead])
 async def update_password(
     user_id: int,
     old_password: str,
