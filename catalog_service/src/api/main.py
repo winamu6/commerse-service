@@ -5,7 +5,7 @@ import uvicorn
 from catalog_service.src.api.routers.product_reader_router import router as product_reader_router
 from catalog_service.src.api.routers.product_writer_router import router as product_writer_router
 
-app = FastAPI(title='inventory_service_api')
+app = FastAPI(title='catalog_service_api')
 
 app.add_middleware(
     CORSMiddleware,
