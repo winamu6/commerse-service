@@ -1,2 +1,3 @@
 from .user import User
-__all__ = ["User"]
+from .token import RevokedToken
+__all__ = ["User", "RevokedToken"]

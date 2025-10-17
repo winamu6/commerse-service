@@ -19,11 +19,11 @@ async def get_cache_service() -> UserCache:
 async def get_auth_service(
     reader_repo: UserReaderRepository = Depends(get_user_read_repository),
 ) -> AuthService:
-    return AuthService(reader_repo)
+    return AuthService(reader=reader_repo)
 
 
 async def get_cached_auth_service(
-    auth: AuthService = Depends(get_auth_service),
+    reader_repo: UserReaderRepository = Depends(get_user_read_repository),
     cache: UserCache = Depends(get_cache_service),
 ) -> CachedAuthService:
-    return CachedAuthService(auth, cache)
+    return CachedAuthService(reader=reader_repo, cache=cache)
