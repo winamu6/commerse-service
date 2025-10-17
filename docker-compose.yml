@@ -4,7 +4,7 @@ services:
   inventory_db:
     image: postgres:15
     env_file:
-      - ./inventory_service/src/.env
+      - ./catalog_service/src/.env
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -22,9 +22,9 @@ services:
   inventory_service:
     build:
       context: .
-      dockerfile: ./inventory_service/Dockerfile
+      dockerfile: ./catalog_service/Dockerfile
     env_file:
-      - ./inventory_service/src/.env
+      - ./catalog_service/src/.env
     environment:
       DATABASE_HOST: inventory_db
       DATABASE_PORT: ${POSTGRES_PORT:-5432}

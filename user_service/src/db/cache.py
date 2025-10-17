@@ -1,6 +1,6 @@
 from redis.asyncio import Redis
-from inventory_service.src.db.settings import settings
-from inventory_service.src.services.cache_service import ProductCache
+from user_service.src.db.settings import settings
+from user_service.src.services.cache_service import UserCache
 
 redis_client = Redis.from_url(
     settings.REDIS_URL,
@@ -8,4 +8,4 @@ redis_client = Redis.from_url(
     decode_responses=True,
 )
 
-cache_service = ProductCache(redis_client)
+cache_service = UserCache(redis_client)

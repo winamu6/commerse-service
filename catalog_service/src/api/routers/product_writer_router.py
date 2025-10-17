@@ -1,9 +1,9 @@
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
-from inventory_service.src.api.depends import get_cached_product_writer
-from inventory_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
-from inventory_service.src.services.cached.cached_writer_service import CachedProductWriter
+from catalog_service.src.api.depends import get_cached_product_writer
+from catalog_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
+from catalog_service.src.services.cached.cached_writer_service import CachedProductWriter
 
 router = APIRouter(prefix="/products_write", tags=["ProductsWrite"])
 

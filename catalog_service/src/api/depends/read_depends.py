@@ -1,10 +1,10 @@
 from fastapi import Depends
-from inventory_service.src.db.database import async_session_maker
-from inventory_service.src.db.cache import redis_client
-from inventory_service.src.repository.read_repository import ReadRepository
-from inventory_service.src.services.reader_service import ProductReader
-from inventory_service.src.services.cache_service import ProductCache
-from inventory_service.src.services.cached.cached_reader_service import CachedProductReader
+from catalog_service.src.db.database import async_session_maker
+from catalog_service.src.db.cache import redis_client
+from catalog_service.src.repository.read_repository import ReadRepository
+from catalog_service.src.services.reader_service import ProductReader
+from catalog_service.src.services.cache_service import ProductCache
+from catalog_service.src.services.cached.cached_reader_service import CachedProductReader
 
 
 async def get_product_read_repository() -> ReadRepository:

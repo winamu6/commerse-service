@@ -1,7 +1,7 @@
 from typing import Optional
-from inventory_service.src.services.writer_service import ProductWriter
-from inventory_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
-from inventory_service.src.services.cache_service import ProductCache
+from catalog_service.src.services.writer_service import ProductWriter
+from catalog_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
+from catalog_service.src.services.cache_service import ProductCache
 
 class CachedProductWriter:
 

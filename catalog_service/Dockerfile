@@ -13,7 +13,7 @@ RUN apt-get update \
  && pip install --upgrade pip setuptools wheel
 
 
-COPY inventory_service/requirements.txt .
+COPY catalog_service/requirements.txt .
 
 
 RUN pip install --no-cache-dir -r requirements.txt
@@ -34,12 +34,12 @@ COPY --from=builder /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder /usr/local/bin /usr/local/bin
 
 
-COPY inventory_service/src ./src
-COPY inventory_service/alembic ./alembic
-COPY inventory_service/alembic.ini ./alembic.ini
+COPY catalog_service/src ./src
+COPY catalog_service/alembic ./alembic
+COPY catalog_service/alembic.ini ./alembic.ini
 
 
-COPY inventory_service/src/.env ./src/.env
+COPY catalog_service/src/.env ./src/.env
 
 
 RUN chown -R app:app /app
