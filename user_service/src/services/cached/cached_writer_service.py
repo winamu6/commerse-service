@@ -15,6 +15,12 @@ class CachedUserWriter:
             await self.cache.delete(f"user:{user_id}", f"user:email:{updated_user.email}")
         return updated_user
 
+    async def cached_update_user_role(self, user_id: int, role: str):
+        updated_user = await self.writer.update_user_role(user_id, role)
+        if updated_user:
+            await self.cache.delete(f"user:{user_id}", f"user:email:{updated_user.email}")
+        return updated_user
+
     async def cached_delete_user(self, user_id: int):
         result = await self.writer.delete_user(user_id)
         if result:

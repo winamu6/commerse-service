@@ -1,6 +1,5 @@
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from user_service.src.models.user import User
+from user_service.src.models.user import User, UserRole
 from typing import Optional
 
 class UserWriterRepository:
@@ -20,6 +19,20 @@ class UserWriterRepository:
 
         for key, value in update_data.items():
             setattr(user, key, value)
+
+        await self.session.commit()
+        await self.session.refresh(user)
+        return user
+
+    async def update_user_role(self, user_id: int, role: str) -> Optional[User]:
+        user = await self.session.get(User, user_id)
+        if not user:
+            return None
+
+        if role not in UserRole.__members__:
+            raise ValueError(f"Invalid role: {role}")
+
+        user.role = UserRole[role]
 
         await self.session.commit()
         await self.session.refresh(user)

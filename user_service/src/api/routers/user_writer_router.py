@@ -34,7 +34,7 @@ async def create_user(
     return user
 
 #обновить данные пользователя
-@router.put("/users/{user_id}", response_model=Optional[UserRead])
+@router.put("/users/{user_id}/update", response_model=Optional[UserRead])
 async def update_user(
     user_id: int,
     data: UserUpdate,
@@ -45,8 +45,20 @@ async def update_user(
         raise HTTPException(status_code=404, detail="User not found")
     return user
 
+#обновить роль пользователя
+@router.put("/users/{user_id}/role", response_model=Optional[UserRead])
+async def update_user_role(
+    user_id: int,
+    role: str,
+    service: CachedUserWriter = Depends(get_cached_user_writer),
+):
+    user = await service.cached_update_user_role(user_id, role)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
 #удалить пользователя
-@router.delete("/users/{user_id}", response_model=bool)
+@router.delete("/users/{user_id}/delete", response_model=bool)
 async def delete_user(
     user_id: int,
     service: CachedUserWriter = Depends(get_cached_user_writer),
@@ -57,7 +69,7 @@ async def delete_user(
     return success
 
 #обновить пароль пользователя
-@router.put("/users/{user_id}", response_model=Optional[UserRead])
+@router.put("/users/{user_id}/update_password", response_model=Optional[UserRead])
 async def update_password(
     user_id: int,
     old_password: str,
@@ -70,7 +82,7 @@ async def update_password(
     return user
 
 #сброс пароля
-@router.delete("/{user_id}", response_model=bool)
+@router.put("/users/{user_id}/reset_password", response_model=bool)
 async def reset_password(
     user_id: int,
     password: str,

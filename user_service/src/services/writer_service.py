@@ -25,6 +25,10 @@ class UserWriter:
         updated_user = await self.writer.update_user(user_id, update_data)
         return UserRead.from_orm(updated_user) if updated_user else None
 
+    async def update_user_role(self, user_id: int, role: str) -> Optional[UserRead]:
+        updated_user = await self.writer.update_user_role(user_id, role)
+        return UserRead.from_orm(updated_user) if updated_user else None
+
     async def delete_user(self, user_id: int) -> bool:
         return await self.writer.delete_user(user_id)
 
