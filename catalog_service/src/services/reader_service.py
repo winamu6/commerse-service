@@ -1,7 +1,7 @@
 from typing import List
 
-from catalog_service.src.repository import ReadRepository
-from catalog_service.src.schemas import ProductRead
+from src.repository import ReadRepository
+from src.schemas import ProductRead
 
 class ProductReader:
     def __init__(self, repository: ReadRepository):

@@ -1,8 +1,8 @@
 from typing import Optional
 
-from catalog_service.src.models import Product
-from catalog_service.src.repository import WriterRepository
-from catalog_service.src.schemas import ProductCreate, ProductRead, ProductUpdate
+from src.models import Product
+from src.repository import WriterRepository
+from src.schemas import ProductCreate, ProductRead, ProductUpdate
 
 class ProductWriter:
 

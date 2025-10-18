@@ -13,7 +13,7 @@ RUN apt-get update \
  && pip install --upgrade pip setuptools wheel
 
 
-COPY feedback_service/requirements.txt .
+COPY user_service/requirements.txt .
 
 
 RUN pip install --no-cache-dir -r requirements.txt
@@ -34,12 +34,12 @@ COPY --from=builder /usr/local/lib/python3.13 /usr/local/lib/python3.13
 COPY --from=builder /usr/local/bin /usr/local/bin
 
 
-COPY feedback_service/src ./src
-COPY feedback_service/alembic ./alembic
-COPY feedback_service/alembic.ini ./alembic.ini
+COPY user_service/src ./src
+COPY user_service/alembic ./alembic
+COPY user_service/alembic.ini ./alembic.ini
 
 
-COPY feedback_service/src/.env ./src/.env
+COPY user_service/src/.env ./src/.env
 
 
 RUN chown -R app:app /app
@@ -49,7 +49,7 @@ EXPOSE 8000
 
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- --timeout=2 http://127.0.0.1:8005/health || exit 1
+  CMD wget -qO- --timeout=2 http://127.0.0.1:8000/health || exit 1
 
 
-CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8005", "--workers", "1"]
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]

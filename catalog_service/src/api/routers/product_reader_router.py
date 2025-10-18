@@ -2,9 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from catalog_service.src.api.depends import get_cached_product_reader
-from catalog_service.src.schemas.product_schem import ProductRead
-from catalog_service.src.services.cached.cached_reader_service import CachedProductReader
+from src.api.depends import get_cached_product_reader
+from src.schemas.product_schem import ProductRead
+from src.services.cached.cached_reader_service import CachedProductReader
 
 router = APIRouter(prefix="/products_read", tags=["ProductsRead"])
 

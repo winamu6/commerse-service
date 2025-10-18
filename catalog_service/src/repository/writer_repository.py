@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import Optional
 
-from catalog_service.src.models import Product
+from src.models import Product
 
 class WriterRepository:
     def __init__(self, session: AsyncSession):

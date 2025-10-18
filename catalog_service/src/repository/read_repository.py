@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from typing import List, Optional
 
-from catalog_service.src.models import Product
+from src.models import Product
 
 class ReadRepository:
     def __init__(self, session: AsyncSession):

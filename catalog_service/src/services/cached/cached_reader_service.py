@@ -1,7 +1,7 @@
 from typing import List, Optional
-from catalog_service.src.services.reader_service import ProductReader
-from catalog_service.src.schemas import ProductRead
-from catalog_service.src.services.cache_service import ProductCache
+from src.services.reader_service import ProductReader
+from src.schemas import ProductRead
+from src.services.cache_service import ProductCache
 
 
 class CachedProductReader:
