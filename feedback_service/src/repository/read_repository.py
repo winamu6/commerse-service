@@ -2,7 +2,7 @@ from sqlalchemy import select, func, desc, asc
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 
-from feedback_service.src.models.feedback import Feedback
+from src.models.feedback import Feedback
 
 
 class ReadRepository:

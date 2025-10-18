@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
-from feedback_service.src.db import settings
+from src.db import settings
 
 DATABASE_URL = settings.DATABASE_URL_asyncpg
 

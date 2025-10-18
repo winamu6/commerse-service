@@ -1,7 +1,7 @@
 from typing import List
 
-from feedback_service.src.repository import ReadRepository
-from feedback_service.src.schemas import FeedbackRead
+from src.repository import ReadRepository
+from src.schemas import FeedbackRead
 
 
 class FeedbackReader:

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 
-from feedback_service.src.api.depends import get_cached_feedback_reader
-from feedback_service.src.schemas.feedback_schem import FeedbackRead
-from feedback_service.src.services.cached.cached_reader_service import CachedFeedbackReader
+from src.api.depends import get_cached_feedback_reader
+from src.schemas.feedback_schem import FeedbackRead
+from src.services.cached.cached_reader_service import CachedFeedbackReader
 
 router = APIRouter(prefix="/feedback_read", tags=["FeedbackRead"])
 

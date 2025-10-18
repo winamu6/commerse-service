@@ -1,6 +1,6 @@
-from feedback_service.src.models import Feedback
-from feedback_service.src.repository import WriterRepository
-from feedback_service.src.schemas import FeedbackCreate, FeedbackRead
+from src.models import Feedback
+from src.repository import WriterRepository
+from src.schemas import FeedbackCreate, FeedbackRead
 
 
 class FeedbackWriter:

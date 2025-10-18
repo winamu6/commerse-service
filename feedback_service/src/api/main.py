@@ -3,8 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import uvicorn
 
-from feedback_service.src.api.routers.feedback_reader_router import router as feedback_reader_router
-from feedback_service.src.api.routers.feedback_writer_router import router as feedback_writer_router
+from src.api.routers.feedback_reader_router import router as feedback_reader_router
+from src.api.routers.feedback_writer_router import router as feedback_writer_router
 
 app = FastAPI(title='feedback_service_api')
 

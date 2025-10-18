@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends
 
-from feedback_service.src.api.depends import get_cached_feedback_writer
-from feedback_service.src.schemas import FeedbackCreate
-from feedback_service.src.schemas.feedback_schem import FeedbackRead
-from feedback_service.src.services.cached import CachedFeedbackWriter
+from src.api.depends import get_cached_feedback_writer
+from src.schemas import FeedbackCreate
+from src.schemas.feedback_schem import FeedbackRead
+from src.services.cached import CachedFeedbackWriter
 
 router = APIRouter(prefix="/feedback_write", tags=["FeedbackWrite"])
 

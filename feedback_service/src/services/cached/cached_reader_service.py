@@ -1,7 +1,7 @@
 from typing import List
-from feedback_service.src.services.reader_service import FeedbackReader
-from feedback_service.src.schemas import FeedbackRead
-from feedback_service.src.services.cache_service import FeedbackCache
+from src.services.reader_service import FeedbackReader
+from src.schemas import FeedbackRead
+from src.services.cache_service import FeedbackCache
 
 
 class CachedFeedbackReader:

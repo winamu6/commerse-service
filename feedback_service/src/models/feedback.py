@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, DateTime, func
 
-from feedback_service.src.db import Base
+from src.db import Base
 
 
 class Feedback(Base):

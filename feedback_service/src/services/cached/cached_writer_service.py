@@ -1,6 +1,6 @@
-from feedback_service.src.services.writer_service import FeedbackWriter
-from feedback_service.src.services.cache_service import FeedbackCache
-from feedback_service.src.schemas import FeedbackCreate, FeedbackRead
+from src.services.writer_service import FeedbackWriter
+from src.services.cache_service import FeedbackCache
+from src.schemas import FeedbackCreate, FeedbackRead
 
 
 class CachedFeedbackWriter:

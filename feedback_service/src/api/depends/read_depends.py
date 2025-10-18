@@ -1,10 +1,10 @@
 from fastapi import Depends
-from feedback_service.src.services.cached.cached_reader_service import CachedFeedbackReader
-from feedback_service.src.services.reader_service import FeedbackReader
-from feedback_service.src.services.cache_service import FeedbackCache
-from feedback_service.src.repository.read_repository import ReadRepository
-from feedback_service.src.db.database import async_session_maker
-from feedback_service.src.db.cache import redis_client
+from src.services.cached.cached_reader_service import CachedFeedbackReader
+from src.services.reader_service import FeedbackReader
+from src.services.cache_service import FeedbackCache
+from src.repository.read_repository import ReadRepository
+from src.db.database import async_session_maker
+from src.db.cache import redis_client
 
 async def get_feedback_read_repository() -> ReadRepository:
     async with async_session_maker() as session:

@@ -1,11 +1,11 @@
 from fastapi import Depends
 
-from feedback_service.src.repository import WriterRepository
-from feedback_service.src.services.cache_service import FeedbackCache
-from feedback_service.src.db.database import async_session_maker
-from feedback_service.src.db.cache import redis_client
-from feedback_service.src.services.cached import CachedFeedbackWriter
-from feedback_service.src.services.writer_service import FeedbackWriter
+from src.repository import WriterRepository
+from src.services.cache_service import FeedbackCache
+from src.db.database import async_session_maker
+from src.db.cache import redis_client
+from src.services.cached import CachedFeedbackWriter
+from src.services.writer_service import FeedbackWriter
 
 
 async def get_feedback_write_repository() -> WriterRepository:

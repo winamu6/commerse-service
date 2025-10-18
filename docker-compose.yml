@@ -22,6 +22,33 @@ services:
       DATABASE_USER: ${CATALOG_DB_USER}
       DATABASE_PASSWORD: ${CATALOG_DB_PASS}
       DATABASE_NAME: ${CATALOG_DB_NAME}
-      DATABASE_PORT: 5433
+      DATABASE_PORT: ${CATALOG_DB_PORT}
     ports:
       - "8006:8006"
+
+  feedback_db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${FEEDBACK_DB_USER}
+      POSTGRES_PASSWORD: ${FEEDBACK_DB_PASS}
+      POSTGRES_DB: ${FEEDBACK_DB_NAME}
+    ports:
+      - "${FEEDBACK_DB_PORT}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${FEEDBACK_DB_USER} -d ${FEEDBACK_DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  feedback_service:
+    build:
+      context: .
+      dockerfile: ./feedback_service/Dockerfile
+    environment:
+      DATABASE_HOST: feedback_db
+      DATABASE_USER: ${FEEDBACK_DB_USER}
+      DATABASE_PASSWORD: ${FEEDBACK_DB_PASS}
+      DATABASE_NAME: ${FEEDBACK_DB_NAME}
+      DATABASE_PORT: ${FEEDBACK_DB_PORT}
+    ports:
+      - "8005:8005"

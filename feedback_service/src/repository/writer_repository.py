@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from feedback_service.src.models.feedback import Feedback
+from src.models.feedback import Feedback
 
 
 class WriterRepository:
