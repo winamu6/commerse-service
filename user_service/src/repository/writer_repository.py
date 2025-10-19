@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from user_service.src.models.user import User, UserRole
+from src.models.user import User, UserRole
 from typing import Optional
 
 class UserWriterRepository:

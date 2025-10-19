@@ -1,11 +1,11 @@
 from fastapi import Depends
-from user_service.src.db.database import async_session_maker
-from user_service.src.db.cache import redis_client
-from user_service.src.repository.writer_repository import UserWriterRepository
-from user_service.src.repository.reader_repository import UserReaderRepository
-from user_service.src.services.writer_service import UserWriter
-from user_service.src.services.cache_service import UserCache
-from user_service.src.services.cached.cached_writer_service import CachedUserWriter
+from src.db.database import async_session_maker
+from src.db.cache import redis_client
+from src.repository.writer_repository import UserWriterRepository
+from src.repository.reader_repository import UserReaderRepository
+from src.services.writer_service import UserWriter
+from src.services.cache_service import UserCache
+from src.services.cached.cached_writer_service import CachedUserWriter
 
 
 async def get_user_read_repository() -> UserReaderRepository:

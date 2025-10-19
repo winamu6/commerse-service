@@ -2,9 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from user_service.src.api.routers.user_reader_router import router as user_reader_router
-from user_service.src.api.routers.user_writer_router import router as user_writer_router
-from user_service.src.api.routers.auth_router import router as auth_router
+from src.api.routers.user_reader_router import router as user_reader_router
+from src.api.routers.user_writer_router import router as user_writer_router
+from src.api.routers.auth_router import router as auth_router
 
 app = FastAPI(title='user_service_api')
 

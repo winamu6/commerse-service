@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from typing import Optional
-from user_service.src.db import settings
+from src.db import settings
 
 # Настройки (обычно берутся из .env)
 

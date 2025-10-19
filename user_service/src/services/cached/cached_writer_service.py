@@ -1,6 +1,6 @@
-from user_service.src.services.writer_service import UserWriter
-from user_service.src.schemas import UserUpdate
-from user_service.src.services.cache_service import UserCache
+from src.services.writer_service import UserWriter
+from src.schemas import UserUpdate
+from src.services.cache_service import UserCache
 
 
 class CachedUserWriter:

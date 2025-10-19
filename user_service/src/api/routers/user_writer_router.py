@@ -3,10 +3,10 @@ from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi import Response
 
-from user_service.src.api.depends import get_cached_user_writer, get_user_writer
-from user_service.src.schemas import UserCreate, UserRead, UserUpdate
-from user_service.src.services.cached import CachedUserWriter
-from user_service.src.services.writer_service import UserWriter
+from src.api.depends import get_cached_user_writer, get_user_writer
+from src.schemas import UserCreate, UserRead, UserUpdate
+from src.services.cached import CachedUserWriter
+from src.services.writer_service import UserWriter
 
 router = APIRouter(prefix="/user_write", tags=["UserWrite"])
 

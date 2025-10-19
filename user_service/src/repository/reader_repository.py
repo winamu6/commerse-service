@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from user_service.src.models.user import User
+from src.models.user import User
 
 class UserReaderRepository:
     def __init__(self, session: AsyncSession):

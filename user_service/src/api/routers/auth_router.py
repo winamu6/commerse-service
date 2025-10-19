@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import EmailStr
 
-from user_service.src.api.depends import get_cached_auth_service
-from user_service.src.schemas import Token
+from src.api.depends import get_cached_auth_service
+from src.schemas import Token
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 

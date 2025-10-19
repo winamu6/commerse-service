@@ -1,10 +1,10 @@
 from typing import Optional
 
-from user_service.src.db import settings
-from user_service.src.repository import UserReaderRepository
-from user_service.src.schemas import Token
-from user_service.src.services.auth_service import AuthService
-from user_service.src.services.cache_service import UserCache
+from src.db import settings
+from src.repository import UserReaderRepository
+from src.schemas import Token
+from src.services.auth_service import AuthService
+from src.services.cache_service import UserCache
 
 
 class CachedAuthService(AuthService):

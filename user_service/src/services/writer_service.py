@@ -1,8 +1,8 @@
 from typing import Optional
-from user_service.src.models import User
-from user_service.src.repository import UserWriterRepository, UserReaderRepository
-from user_service.src.schemas import UserRead, UserUpdate, UserCreate
-from user_service.src.utils import get_password_hash, verify_password
+from src.models import User
+from src.repository import UserWriterRepository, UserReaderRepository
+from src.schemas import UserRead, UserUpdate, UserCreate
+from src.utils import get_password_hash, verify_password
 
 
 class UserWriter:

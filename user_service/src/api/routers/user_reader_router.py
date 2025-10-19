@@ -3,9 +3,9 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import EmailStr
 
-from user_service.src.api.depends import get_cached_user_reader, get_current_user_from_cookie
-from user_service.src.schemas.user_schem import UserRead
-from user_service.src.services.cached.cached_reader_service import CachedUserReader
+from src.api.depends import get_cached_user_reader, get_current_user_from_cookie
+from src.schemas.user_schem import UserRead
+from src.services.cached.cached_reader_service import CachedUserReader
 
 router = APIRouter(prefix="/user_read", tags=["UserRead"])
 

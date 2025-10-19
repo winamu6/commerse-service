@@ -34,10 +34,10 @@ COPY feedback_service/src/.env ./src/.env
 RUN chown -R app:app /app
 USER app
 
-EXPOSE 8006
+EXPOSE 8005
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- --timeout=2 http://127.0.0.1:8006/health || exit 1
+  CMD wget -qO- --timeout=2 http://127.0.0.1:8005/health || exit 1
 
 CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8005", "--workers", "1"]
 

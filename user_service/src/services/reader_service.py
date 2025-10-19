@@ -1,6 +1,6 @@
 from typing import List
-from user_service.src.repository import UserReaderRepository
-from user_service.src.schemas import UserRead
+from src.repository import UserReaderRepository
+from src.schemas import UserRead
 
 
 class UserReader:

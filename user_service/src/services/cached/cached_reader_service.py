@@ -1,8 +1,8 @@
 import json
 from typing import Optional
-from user_service.src.services.reader_service import UserReader
-from user_service.src.schemas import UserRead
-from user_service.src.services.cache_service import UserCache
+from src.services.reader_service import UserReader
+from src.schemas import UserRead
+from src.services.cache_service import UserCache
 
 
 class CachedUserReader:

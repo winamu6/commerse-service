@@ -1,16 +1,16 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
-from user_service.src.repository import UserReaderRepository
-from user_service.src.repository.revoked_token_repository import RevokedTokenRepository
-from user_service.src.utils.hash_util import verify_password
-from user_service.src.utils.jwt_util import (
+from src.repository import UserReaderRepository
+from src.repository.revoked_token_repository import RevokedTokenRepository
+from src.utils.hash_util import verify_password
+from src.utils.jwt_util import (
     create_access_token,
     create_refresh_token,
     decode_token,
 )
-from user_service.src.db import settings
-from user_service.src.schemas import Token
+from src.db import settings
+from src.schemas import Token
 
 
 class AuthService:

@@ -1,6 +1,6 @@
 from redis.asyncio import Redis
-from user_service.src.db.settings import settings
-from user_service.src.services.cache_service import UserCache
+from src.db.settings import settings
+from src.services.cache_service import UserCache
 
 redis_client = Redis.from_url(
     settings.REDIS_URL,
