@@ -1,4 +1,4 @@
-from sqlalchemy import select, and_, not_
+from sqlalchemy import select, and_, not_, case
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from typing import List, Optional
@@ -50,10 +50,29 @@ class ReadRepository:
         result = await self.session.scalars(stmt)
         return result.all()
 
-    async def sort_orders_by_status(
-        self, desc: bool = True, limit: int = 10, offset: int = 0
-    ) -> List[Order]:
-        order_by_clause = Order.status.desc() if desc else Order.status.asc()
-        stmt = select(Order).order_by(order_by_clause).limit(limit).offset(offset)
+    async def sort_orders_by_status_for_user(self,
+                                             user_id: int,
+                                             limit: int = 10,
+                                             offset: int = 0
+                                             ):
+        status_order = case(
+            (
+                (Order.status == OrderStatus.COMPLETED, 1),
+                (Order.status == OrderStatus.SHIPPED, 2),
+                (Order.status == OrderStatus.PAID, 3),
+                (Order.status == OrderStatus.PENDING, 4),
+                (Order.status == OrderStatus.CANCELED, 5),
+            ),
+            else_=6,
+        )
+
+        stmt = (
+            select(Order)
+            .where(Order.user_id == user_id)
+            .order_by(status_order)
+            .limit(limit)
+            .offset(offset)
+        )
+
         result = await self.session.scalars(stmt)
         return result.all()
