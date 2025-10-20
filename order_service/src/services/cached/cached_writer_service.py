@@ -1,6 +1,8 @@
-from typing import Optional
+from typing import Optional, Tuple, List
+
+from order_service.src.schemas.order_schem import OrderItemBase
 from order_service.src.services.writer_service import OrderWriter
-from order_service.src.schemas import OrderCreate, OrderRead
+from order_service.src.schemas import OrderCreate, OrderRead, OrderStatus, OrderItemRead
 from order_service.src.services.cache_service import OrderCache
 
 class CachedOrderWriter:
@@ -9,3 +11,36 @@ class CachedOrderWriter:
         self.writer = writer
         self.cache = cache
 
+    async def create_order(
+            self, order_data: OrderCreate, order_items_data: List[OrderItemBase]
+    ) -> Tuple[OrderRead, List[OrderItemRead]]:
+
+        order_read, order_items = await self.writer.create_order(order_data, order_items_data)
+
+        cache_key = f"order:{order_read.id}"
+        await self.cache.set(cache_key, order_read.dict(), expire=120)
+
+        await self.cache.delete_pattern(f"orders:user:{order_read.user_id}:*")
+
+        return order_read, order_items
+
+    async def update_order(
+            self, order_id: int, new_status: OrderStatus
+    ) -> Optional[OrderRead]:
+        order = await self.writer.update_order(order_id, new_status)
+        if not order:
+            return None
+
+        cache_key = f"order:{order.id}"
+        await self.cache.set(cache_key, order.dict(), expire=120)
+
+        await self.cache.delete_pattern(f"orders:user:{order.user_id}:*")
+
+        return order
+
+    async def delete_order(self, order_id: int) -> bool:
+        deleted = await self.writer.delete_order(order_id)
+        if deleted:
+            await self.cache.delete(f"order:{order_id}")
+            await self.cache.delete_pattern("orders:user:*")
+        return deleted

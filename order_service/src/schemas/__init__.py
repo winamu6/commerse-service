@@ -1,3 +1,3 @@
-from .order_schem import OrderRead, OrderCreate
+from .order_schem import OrderRead, OrderCreate, OrderStatus, OrderItemRead
 
-__all__ = ["OrderCreate", "OrderRead"]
+__all__ = ["OrderCreate", "OrderRead", "OrderStatus", "OrderItemRead"]
