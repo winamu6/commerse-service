@@ -56,13 +56,11 @@ class ReadRepository:
                                              offset: int = 0
                                              ):
         status_order = case(
-            (
-                (Order.status == OrderStatus.COMPLETED, 1),
-                (Order.status == OrderStatus.SHIPPED, 2),
-                (Order.status == OrderStatus.PAID, 3),
-                (Order.status == OrderStatus.PENDING, 4),
-                (Order.status == OrderStatus.CANCELED, 5),
-            ),
+            (Order.status == OrderStatus.COMPLETED, 1),
+            (Order.status == OrderStatus.SHIPPED, 2),
+            (Order.status == OrderStatus.PAID, 3),
+            (Order.status == OrderStatus.PENDING, 4),
+            (Order.status == OrderStatus.CANCELED, 5),
             else_=6,
         )
 
