@@ -6,8 +6,12 @@ class CartItemResponse(BaseModel):
     name: str
     price: float
     quantity: int
+    item_total: float
 
 class CartResponse(BaseModel):
     user_id: int
     items: List[CartItemResponse]
     total_price: float
+
+    class Config:
+        from_attributes = True
