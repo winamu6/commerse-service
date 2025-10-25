@@ -28,7 +28,7 @@ class CachedOrderWriter:
 
         cache_key = f"order:{order.id}"
 
-        await self.cache.set(cache_key, order.dict(), expire=120)
+        await self.cache.set(cache_key, order.model_dump_json(), expire=120)
         await self.cache.delete_pattern(f"orders:user:{order.user_id}:*")
 
         return order

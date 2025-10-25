@@ -6,17 +6,17 @@ from order_service.src.db.database import Base
 
 
 class OrderStatus(enum.Enum):
-    PENDING = "pending"
-    PAID = "paid"
-    SHIPPED = "shipped"
-    COMPLETED = "completed"
-    CANCELED = "canceled"
+    PENDING = "PENDING"
+    PAID = "PAID"
+    SHIPPED = "SHIPPED"
+    COMPLETED = "COMPLETED"
+    CANCELED = "CANCELED"
 
 class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, nullable=False)  # id пользователя
+    user_id = Column(Integer, nullable=False)
     status = Column(Enum(OrderStatus), default=OrderStatus.PENDING, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

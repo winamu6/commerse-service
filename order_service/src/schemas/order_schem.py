@@ -4,11 +4,11 @@ from datetime import datetime
 from enum import Enum
 
 class OrderStatus(str, Enum):
-    PENDING = "pending"
-    PAID = "paid"
-    SHIPPED = "shipped"
-    COMPLETED = "completed"
-    CANCELED = "canceled"
+    PENDING = "PENDING"
+    PAID = "PAID"
+    SHIPPED = "SHIPPED"
+    COMPLETED = "COMPLETED"
+    CANCELED = "CANCELED"
 
 class OrderItemBase(BaseModel):
     product_id: int
