@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 from typing import List, Optional
 
-from order_service.src.models import Order, OrderItem, OrderStatus
+from src.models import Order, OrderItem, OrderStatus
 
 
 class ReadRepository:

@@ -91,3 +91,34 @@ services:
     depends_on:
       user_db:
         condition: service_healthy
+
+  order_db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ${ORDER_DB_USER}
+      POSTGRES_PASSWORD: ${ORDER_DB_PASS}
+      POSTGRES_DB: ${ORDER_DB_NAME}
+    ports:
+      - "${ORDER_DB_PORT}:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${ORDER_DB_USER} -d ${ORDER_DB_NAME}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  order_service:
+    build:
+      context: .
+      dockerfile: ./order_service/Dockerfile
+    environment:
+      DATABASE_HOST: order_db
+      DATABASE_USER: ${ORDER_DB_USER}
+      DATABASE_PASSWORD: ${ORDER_DB_PASS}
+      DATABASE_NAME: ${ORDER_DB_NAME}
+      DATABASE_PORT: ${ORDER_DB_PORT}
+    ports:
+      - "8003:8003"
+
+    depends_on:
+      user_db:
+        condition: service_healthy

@@ -1,8 +1,8 @@
 from typing import Optional, Tuple, List
 
-from order_service.src.services.writer_service import OrderWriter
-from order_service.src.schemas import OrderCreate, OrderRead, OrderStatus
-from order_service.src.services.cache_service import OrderCache
+from src.services.writer_service import OrderWriter
+from src.schemas import OrderCreate, OrderRead, OrderStatus
+from src.services.cache_service import OrderCache
 
 class CachedOrderWriter:
 

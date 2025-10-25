@@ -1,7 +1,7 @@
 from typing import List, Optional
-from order_service.src.services.reader_service import OrderReader
-from order_service.src.schemas import OrderRead
-from order_service.src.services.cache_service import OrderCache
+from src.services.reader_service import OrderReader
+from src.schemas import OrderRead
+from src.services.cache_service import OrderCache
 
 
 class CachedOrderReader:

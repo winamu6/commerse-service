@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from typing import Optional, Tuple, List
 
-from order_service.src.models import Order, OrderItem, OrderStatus
+from src.models import Order, OrderItem, OrderStatus
 
 
 class WriterRepository:

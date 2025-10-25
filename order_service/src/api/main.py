@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
-from order_service.src.api.routers.order_reader_router import router as order_reader_router
-from order_service.src.api.routers.order_writer_router import router as order_writer_router
+from src.api.routers.order_reader_router import router as order_reader_router
+from src.api.routers.order_writer_router import router as order_writer_router
 
 app = FastAPI(title='order_service_api')
 

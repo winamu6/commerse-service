@@ -1,9 +1,9 @@
 from typing import Optional, List, Tuple
 
-from order_service.src.models import Order, OrderItem
-from order_service.src.repository import WriterRepository
-from order_service.src.schemas import OrderCreate, OrderRead
-from order_service.src.schemas.order_schem import OrderItemBase, OrderStatus
+from src.models import Order, OrderItem
+from src.repository import WriterRepository
+from src.schemas import OrderCreate, OrderRead
+from src.schemas.order_schem import OrderItemBase, OrderStatus
 
 
 class OrderWriter:

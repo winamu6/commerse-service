@@ -1,7 +1,7 @@
 from typing import List, Optional
 
-from order_service.src.repository import ReadRepository
-from order_service.src.schemas import OrderRead
+from src.repository import ReadRepository
+from src.schemas import OrderRead
 
 
 class OrderReader:

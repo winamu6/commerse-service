@@ -1,10 +1,10 @@
 from fastapi import Depends
-from order_service.src.db.database import async_session_maker
-from order_service.src.db.cache import redis_client
-from order_service.src.repository.read_repository import ReadRepository
-from order_service.src.services.reader_service import OrderReader
-from order_service.src.services.cache_service import OrderCache
-from order_service.src.services.cached.cached_reader_service import CachedOrderReader
+from src.db.database import async_session_maker
+from src.db.cache import redis_client
+from src.repository.read_repository import ReadRepository
+from src.services.reader_service import OrderReader
+from src.services.cache_service import OrderCache
+from src.services.cached.cached_reader_service import CachedOrderReader
 
 
 async def get_order_read_repository() -> ReadRepository:
