@@ -1,7 +1,7 @@
 from fastapi import Depends
 from cart_service.src.db.cache import redis_client
 from cart_service.src.services.cache_service import CartCache
-from cart_service.src.repository.read_repository import CartReadRepository
+from cart_service.src.repository import CartReadRepository
 from cart_service.src.services.read_service import CartReadService
 
 
