@@ -8,7 +8,7 @@ from cart_service.src.services.read_service import CartReadService
 
 router = APIRouter(prefix="/cart_read", tags=["CartRead"])
 
-@router.get("/{user_id}/cart", response_model=List[CartResponse])
+@router.get("/{user_id}/cart", response_model=CartResponse)
 async def get_cart(
     user_id: int,
     service: CartReadService = Depends(get_cart_read_service),
