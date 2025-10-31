@@ -1,6 +1,6 @@
 from redis.asyncio import Redis
-from cart_service.src.db.settings import settings
-from cart_service.src.services.cache_service import CartCache
+from src.db.settings import settings
+from src.services.cache_service import CartCache
 
 redis_client = Redis.from_url(
     settings.REDIS_URL,

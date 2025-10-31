@@ -1,5 +1,5 @@
-from cart_service.src.repository.read_repository import CartReadRepository
-from cart_service.src.schemas import CartResponse, CartItemResponse
+from src.repository.read_repository import CartReadRepository
+from src.schemas import CartResponse, CartItemResponse
 
 
 class CartReadService:

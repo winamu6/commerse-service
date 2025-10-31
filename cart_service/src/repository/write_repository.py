@@ -1,5 +1,5 @@
-from cart_service.src.services.cache_service import CartCache
-from cart_service.src.models.cart import Cart
+from src.services.cache_service import CartCache
+from src.models.cart import Cart
 
 class CartWriteRepository:
 

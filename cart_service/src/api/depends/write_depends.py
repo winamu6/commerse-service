@@ -1,9 +1,9 @@
 from fastapi import Depends
-from cart_service.src.db.cache import redis_client
-from cart_service.src.services.cache_service import CartCache
-from cart_service.src.repository import CartWriteRepository, CartReadRepository
-from cart_service.src.services.write_service import CartWriteService
-from cart_service.src.api.depends.read_depends import get_cart_read_repository
+from src.db.cache import redis_client
+from src.services.cache_service import CartCache
+from src.repository import CartWriteRepository, CartReadRepository
+from src.services.write_service import CartWriteService
+from src.api.depends.read_depends import get_cart_read_repository
 
 
 async def get_cache_service() -> CartCache:

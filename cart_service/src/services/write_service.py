@@ -1,11 +1,11 @@
-from cart_service.src.repository.read_repository import CartReadRepository
-from cart_service.src.repository import CartWriteRepository
-from cart_service.src.schemas import (
+from src.repository.read_repository import CartReadRepository
+from src.repository import CartWriteRepository
+from src.schemas import (
     CartItemRequest,
     CartItemResponse,
     CartResponse,
 )
-from cart_service.src.models.cart import Cart, CartItem
+from src.models.cart import Cart, CartItem
 
 
 class CartWriteService:

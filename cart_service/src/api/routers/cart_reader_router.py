@@ -2,9 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 
-from cart_service.src.api.depends import get_cart_read_service
-from cart_service.src.schemas import CartResponse
-from cart_service.src.services.read_service import CartReadService
+from src.api.depends import get_cart_read_service
+from src.schemas import CartResponse
+from src.services.read_service import CartReadService
 
 router = APIRouter(prefix="/cart_read", tags=["CartRead"])
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from cart_service.src.api.depends import get_cart_write_service
-from cart_service.src.schemas import CartResponse, CartItemRequest
-from cart_service.src.services.write_service import CartWriteService
+from src.api.depends import get_cart_write_service
+from src.schemas import CartResponse, CartItemRequest
+from src.services.write_service import CartWriteService
 
 router = APIRouter(prefix="/cart_write", tags=["CartWrite"])
 

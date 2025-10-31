@@ -1,4 +1,17 @@
 services:
+  catalog_redis:
+    image: redis:7
+    command: [ "redis-server", "--requirepass", "${CATALOG_REDIS_PASSWORD}" ]
+    ports:
+      - "${CATALOG_REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: ${CATALOG_REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${CATALOG_REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   catalog_db:
     image: postgres:15
     environment:
@@ -8,7 +21,7 @@ services:
     ports:
       - "${CATALOG_DB_PORT}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${CATALOG_DB_USER} -d ${CATALOG_DB_NAME}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${CATALOG_DB_USER} -d ${CATALOG_DB_NAME}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,12 +36,33 @@ services:
       DATABASE_PASSWORD: ${CATALOG_DB_PASS}
       DATABASE_NAME: ${CATALOG_DB_NAME}
       DATABASE_PORT: ${CATALOG_DB_PORT}
+
+      REDIS_HOST: catalog_redis
+      REDIS_PORT: ${CATALOG_REDIS_PORT}
+      REDIS_DB: ${CATALOG_REDIS_DB}
+      REDIS_PASSWORD: ${CATALOG_REDIS_PASSWORD}
+
     ports:
       - "8006:8006"
 
     depends_on:
       catalog_db:
         condition: service_healthy
+      catalog_redis:
+        condition: service_healthy
+
+  feedback_redis:
+    image: redis:7
+    command: [ "redis-server", "--requirepass", "${FEEDBACK_REDIS_PASSWORD}" ]
+    ports:
+      - "${FEEDBACK_REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: ${FEEDBACK_REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${FEEDBACK_REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   feedback_db:
     image: postgres:15
@@ -54,12 +88,32 @@ services:
       DATABASE_PASSWORD: ${FEEDBACK_DB_PASS}
       DATABASE_NAME: ${FEEDBACK_DB_NAME}
       DATABASE_PORT: ${FEEDBACK_DB_PORT}
+
+      REDIS_HOST: feedback_redis
+      REDIS_PORT: ${FEEDBACK_REDIS_PORT}
+      REDIS_DB: ${FEEDBACK_REDIS_DB}
+      REDIS_PASSWORD: ${FEEDBACK_REDIS_PASSWORD}
     ports:
       - "8005:8005"
 
     depends_on:
       feedback_db:
         condition: service_healthy
+      feedback_redis:
+        condition: service_healthy
+
+  user_redis:
+    image: redis:7
+    command: [ "redis-server", "--requirepass", "${USER_REDIS_PASSWORD}" ]
+    ports:
+      - "${USER_REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: ${USER_REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${USER_REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   user_db:
     image: postgres:15
@@ -85,12 +139,34 @@ services:
       DATABASE_PASSWORD: ${USER_DB_PASS}
       DATABASE_NAME: ${USER_DB_NAME}
       DATABASE_PORT: ${USER_DB_PORT}
+
+
+      REDIS_HOST: user_redis
+      REDIS_PORT: ${USER_REDIS_PORT}
+      REDIS_DB: ${USER_REDIS_DB}
+      REDIS_PASSWORD: ${USER_REDIS_PASSWORD}
     ports:
       - "8001:8001"
 
     depends_on:
       user_db:
         condition: service_healthy
+      user_redis:
+        condition: service_healthy
+
+
+  order_redis:
+    image: redis:7
+    command: [ "redis-server", "--requirepass", "${ORDER_REDIS_PASSWORD}" ]
+    ports:
+      - "${ORDER_REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: ${ORDER_REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${ORDER_REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   order_db:
     image: postgres:15
@@ -116,9 +192,44 @@ services:
       DATABASE_PASSWORD: ${ORDER_DB_PASS}
       DATABASE_NAME: ${ORDER_DB_NAME}
       DATABASE_PORT: ${ORDER_DB_PORT}
+
+      REDIS_HOST: order_redis
+      REDIS_PORT: ${ORDER_REDIS_PORT}
+      REDIS_DB: ${USER_REDIS_DB}
+      REDIS_PASSWORD: ${USER_REDIS_PASSWORD}
     ports:
       - "8003:8003"
 
     depends_on:
-      user_db:
+      order_db:
+        condition: service_healthy
+      order_redis:
+        condition: service_healthy
+
+  cart_redis:
+    image: redis:7
+    command: [ "redis-server", "--requirepass", "${CART_REDIS_PASSWORD}" ]
+    ports:
+      - "${CART_REDIS_PORT}:6379"
+    environment:
+      REDIS_PASSWORD: ${CART_REDIS_PASSWORD}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "-a", "${CART_REDIS_PASSWORD}", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cart_service:
+    build:
+      context: .
+      dockerfile: ./cart_service/Dockerfile
+    environment:
+      REDIS_HOST: cart_redis
+      REDIS_PORT: ${CART_REDIS_PORT}
+      REDIS_DB: ${CART_REDIS_DB}
+      REDIS_PASSWORD: ${CART_REDIS_PASSWORD}
+    ports:
+      - "8007:8007"
+    depends_on:
+      cart_redis:
         condition: service_healthy
