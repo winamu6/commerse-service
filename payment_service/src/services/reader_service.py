@@ -1,10 +1,10 @@
 from typing import List, Optional, Dict, Any
-from payment_service.src.repository import ReadRepository
+from payment_service.src.repository import IReadRepository
 from payment_service.src.schemas import PaymentResponse
 
 
 class PaymentReader:
-    def __init__(self, repository: ReadRepository):
+    def __init__(self, repository: IReadRepository):
         self.repo = repository
 
     async def get_payment_by_id(self, payment_id: int) -> Optional[PaymentResponse]:
