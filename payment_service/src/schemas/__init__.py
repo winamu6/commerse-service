@@ -1,3 +1,3 @@
-from .payment_schem import PaymentCreate, PaymentList, PaymentOut, PaymentStatus, PaymentUpdateStatus
+from .payment_schem import PaymentCreate, PaymentList, PaymentResponse, PaymentStatus, PaymentUpdateStatus
 
-__all__ = ["PaymentStatus", "PaymentUpdateStatus", "PaymentCreate", "PaymentList", "PaymentOut"]
+__all__ = ["PaymentStatus", "PaymentUpdateStatus", "PaymentCreate", "PaymentList", "PaymentResponse"]

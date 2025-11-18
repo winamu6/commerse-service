@@ -30,7 +30,7 @@ class PaymentUpdateStatus(BaseModel):
     provider_response: Optional[dict] = None
 
 
-class PaymentOut(BaseModel):
+class PaymentResponse(BaseModel):
     id: int
     payment_uid: str
     order_id: str
@@ -48,4 +48,4 @@ class PaymentOut(BaseModel):
 
 
 class PaymentList(BaseModel):
-    payments: List[PaymentOut]
+    payments: List[PaymentResponse]
