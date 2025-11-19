@@ -5,7 +5,7 @@ from payment_service.src.schemas import PaymentResponse
 from payment_service.src.services.cache_service import PaymentCache
 
 
-class CachedPaymentReader:
+class CachedReaderService:
 
     def __init__(self, reader: PaymentReader, cache: PaymentCache):
         self.reader = reader

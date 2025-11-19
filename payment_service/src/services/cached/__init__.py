@@ -1,4 +1,4 @@
-from cached_reader_service import CachedReaderReader
+from cached_reader_service import CachedReaderService
+from cached_writer_service import CachedWriterService
 
-
-__all__ = ["CachedReaderReader"]
+__all__ = ["CachedReaderService", "CachedWriterService"]
