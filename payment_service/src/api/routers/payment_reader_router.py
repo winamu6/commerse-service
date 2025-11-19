@@ -8,6 +8,7 @@ from payment_service.src.services.cached.cached_reader_service import CachedPaym
 
 router = APIRouter(prefix="/payment_read", tags=["PaymentRead"])
 
+#получить платеж по id
 @router.get("/by_id/{payment_id}", response_model=PaymentResponse)
 async def get_payment_by_id(
         payment_id: int,
@@ -18,16 +19,18 @@ async def get_payment_by_id(
         raise HTTPException(status_code=404, detail="Payment not found")
     return payment
 
+#получить список платежей
 @router.get("/list/", response_model=List[PaymentResponse])
 async def get_list_payment(
         limit: int = Query(100, ge=1),
         offset: int = Query(0, ge=0),
         service: CachedPaymentReader = Depends(get_cached_payment_reader)
 ):
-    orders = await service.get_cached_list_payments(limit, offset)
+    payment = await service.get_cached_list_payments(limit, offset)
 
-    return orders
+    return payment
 
+#получить отфильтрованный список платежей
 @router.get("/filter", response_model=List[PaymentResponse])
 async def filter_payments(
         filters: PaymentFilter = Depends(),

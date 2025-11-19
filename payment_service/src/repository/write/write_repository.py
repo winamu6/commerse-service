@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from payment_service.src.models import Payment, PaymentStatus
+from payment_service.src.models import Payment
 
 
 class WriterRepository:
