@@ -12,6 +12,21 @@ class PaymentStatus(str, Enum):
     failed = "failed"
     refunded = "refunded"
 
+class PaymentFilter(BaseModel):
+    user_id: Optional[int] = Field(None, example=42)
+    order_id: Optional[str] = Field(None, example="ORD-2025-001")
+    status: Optional[PaymentStatus] = Field(None)
+    provider: Optional[str] = Field(None, example="yookassa")
+
+    created_from: Optional[datetime] = None
+    created_to: Optional[datetime] = None
+
+    def to_sql_filters(self):
+        return {
+            k: v
+            for k, v in self.dict().items()
+            if v is not None and not k.startswith("created_")
+        }
 
 class PaymentBase(BaseModel):
     order_id: str = Field(..., example="ORD-2025-001")

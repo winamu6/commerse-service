@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict, Any
 from payment_service.src.repository import IReadRepository
-from payment_service.src.schemas import PaymentResponse
+from payment_service.src.schemas import PaymentResponse, PaymentFilter
 
 
 class PaymentReader:
@@ -17,9 +17,19 @@ class PaymentReader:
 
     async def get_filter_payment(
         self,
-        filters: Optional[Dict[str, Any]] = None,
+        filters: PaymentFilter,
         limit: int = 100,
         offset: int = 0
     ) -> List[PaymentResponse]:
-        payments = await self.repo.filter_payments(filters=filters, limit=limit, offset=offset)
+
+        sql_filters = filters.to_sql_filters()
+
+        payments = await self.repo.filter_payments(
+            filters=sql_filters,
+            created_from=filters.created_from,
+            created_to=filters.created_to,
+            limit=limit,
+            offset=offset
+        )
+
         return [PaymentResponse.from_orm(p) for p in payments]

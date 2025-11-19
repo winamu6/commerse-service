@@ -1,5 +1,5 @@
 from typing import Optional, List, Dict, Any
-from sqlalchemy import select
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from payment_service.src.models import Payment
 
@@ -29,20 +29,30 @@ class ReadRepository:
 
     async def filter_payments(
         self,
-        filters: Optional[Dict[str, Any]] = None,
-        limit: Optional[int] = None,
-        offset: Optional[int] = None
+        filters: Dict[str, Any],
+        created_from: Optional[Any] = None,
+        created_to: Optional[Any] = None,
+        limit: int = 100,
+        offset: int = 0
     ) -> List[Payment]:
-        stmt = select(Payment)
-        if filters:
-            for field, value in filters.items():
-                if hasattr(Payment, field) and value is not None:
-                    stmt = stmt.where(getattr(Payment, field) == value)
 
-        if offset:
-            stmt = stmt.offset(offset)
-        if limit:
-            stmt = stmt.limit(limit)
+        stmt = select(Payment)
+
+        conditions = []
+
+        for field, value in filters.items():
+            if hasattr(Payment, field):
+                conditions.append(getattr(Payment, field) == value)
+
+        if created_from:
+            conditions.append(Payment.created_at >= created_from)
+        if created_to:
+            conditions.append(Payment.created_at <= created_to)
+
+        if conditions:
+            stmt = stmt.where(and_(*conditions))
+
+        stmt = stmt.offset(offset).limit(limit)
 
         result = await self._session.execute(stmt)
         return result.scalars().all()

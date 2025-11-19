@@ -1,7 +1,7 @@
 import json
 from typing import List, Optional, Dict, Any
 from payment_service.src.services.reader_service import PaymentReader
-from payment_service.src.schemas import PaymentResponse
+from payment_service.src.schemas import PaymentResponse, PaymentFilter
 from payment_service.src.services.cache_service import PaymentCache
 
 
@@ -38,12 +38,12 @@ class CachedPaymentReader:
 
     async def get_cached_filter_payment(
         self,
-        filters: Optional[Dict[str, Any]] = None,
+        filters: PaymentFilter,
         limit: int = 100,
         offset: int = 0
-    ) -> List[PaymentResponse]:
+    ):
 
-        filters_key = json.dumps(filters or {}, sort_keys=True)
+        filters_key = json.dumps(filters.dict(exclude_none=True), sort_keys=True)
         cache_key = f"payments:filter:{filters_key}:{limit}:{offset}"
 
         cached = await self.cache.get(cache_key)
