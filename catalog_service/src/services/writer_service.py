@@ -1,12 +1,12 @@
 from typing import Optional
 
 from src.models import Product
-from src.repository import WriterRepository
+from src.repository import IWriterRepository
 from src.schemas import ProductCreate, ProductRead, ProductUpdate
 
 class ProductWriter:
 
-    def __init__(self, repository: WriterRepository):
+    def __init__(self, repository: IWriterRepository):
         self.repo = repository
 
     async def create_product(self, data: ProductCreate) -> ProductRead:
