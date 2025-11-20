@@ -5,7 +5,13 @@ import uvicorn
 from src.api.routers.product_reader_router import router as product_reader_router
 from src.api.routers.product_writer_router import router as product_writer_router
 
+from src.db import wait_for_db
+
 app = FastAPI(title='catalog_service_api')
+
+@app.on_event("startup")
+async def startup_event():
+    await wait_for_db()
 
 app.add_middleware(
     CORSMiddleware,
