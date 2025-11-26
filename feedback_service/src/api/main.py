@@ -6,7 +6,13 @@ import uvicorn
 from src.api.routers.feedback_reader_router import router as feedback_reader_router
 from src.api.routers.feedback_writer_router import router as feedback_writer_router
 
+from src.db import wait_for_db
+
 app = FastAPI(title='feedback_service_api')
+
+@app.on_event("startup")
+async def startup_event():
+    await wait_for_db()
 
 app.add_middleware(
     CORSMiddleware,

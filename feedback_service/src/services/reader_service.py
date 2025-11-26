@@ -1,11 +1,11 @@
 from typing import List
 
-from src.repository import ReadRepository
+from src.repository import IReadRepository
 from src.schemas import FeedbackRead
 
 
 class FeedbackReader:
-    def __init__(self, repository: ReadRepository):
+    def __init__(self, repository: IReadRepository):
         self.repo = repository
 
     async def get_feedback_for_product(

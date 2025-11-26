@@ -1,4 +1,4 @@
-from .read_repository import ReadRepository
-from .writer_repository import WriterRepository
+from .read import IReadRepository
+from .write import IWriterRepository
 
-__all__ = ["ReadRepository", "WriterRepository"]
+__all__ = ["IReadRepository", "IWriterRepository"]

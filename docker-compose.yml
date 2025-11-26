@@ -92,7 +92,22 @@ services:
       test: [ "CMD-SHELL", "pg_isready -U ${FEEDBACK_DB_USER} -d ${FEEDBACK_DB_NAME}" ]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+
+  feedback_migrate:
+    build:
+      context: .
+      dockerfile: ./feedback_service/Dockerfile
+    command: alembic upgrade head
+    environment:
+      DATABASE_HOST: feedback_db
+      DATABASE_USER: ${FEEDBACK_DB_USER}
+      DATABASE_PASSWORD: ${FEEDBACK_DB_PASS}
+      DATABASE_NAME: ${FEEDBACK_DB_NAME}
+      DATABASE_PORT: 5432
+    depends_on:
+      feedback_db:
+        condition: service_healthy
 
   feedback_service:
     build:
@@ -103,12 +118,13 @@ services:
       DATABASE_USER: ${FEEDBACK_DB_USER}
       DATABASE_PASSWORD: ${FEEDBACK_DB_PASS}
       DATABASE_NAME: ${FEEDBACK_DB_NAME}
-      DATABASE_PORT: ${FEEDBACK_DB_PORT}
+      DATABASE_PORT: 5432
 
       REDIS_HOST: feedback_redis
-      REDIS_PORT: ${FEEDBACK_REDIS_PORT}
+      REDIS_PORT: 6379
       REDIS_DB: ${FEEDBACK_REDIS_DB}
       REDIS_PASSWORD: ${FEEDBACK_REDIS_PASSWORD}
+
     ports:
       - "8005:8005"
 
@@ -117,6 +133,7 @@ services:
         condition: service_healthy
       feedback_redis:
         condition: service_healthy
+
 
   user_redis:
     image: redis:7
